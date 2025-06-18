@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 
 function App() {
 
   const [politicians, setPoliticians] = useState([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     async function politiciansData() {
@@ -28,17 +29,35 @@ function App() {
 
   }, []);
 
+  const filteredPoliticians = useMemo(() => {
+    return politicians.filter(politician => {
+      const isInList = politician.name.toLowerCase().includes(search.toLowerCase())
+      const isInCountry = politician.country.toLowerCase().includes(search.toLowerCase())
+
+      return isInList || isInCountry;
+    })
+  }, [politicians, search])
+
 
   return (
     <>
-      <p>ESERCITAZIONE </p>
-      <h1>Politicians</h1>
+
+      <h1>POLITICI</h1>
+
+      <input
+        type="text"
+        placeholder='Cerca un politico per nome o per nazione'
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+      />
+
       <ul className='card-list'>
-        {politicians.map(politician => (
+        {filteredPoliticians.map(politician => (
           <li key={politician.id} >
             <div className='card'>
-              <h3>{politician.name}</h3>
-              <span>{politician.position}</span>
+              <h3>{politician.name} </h3>
+              <h4>Nazione : {politician.country}</h4>
+              <span>Posizione : {politician.position}</span>
               <p>{politician.biography}</p>
               <img src={politician.image} alt="Photo" />
             </div>
@@ -52,17 +71,4 @@ function App() {
 
 export default App
 
-//  Milestone 1: Recuperare e visualizzare i dati
-// Effettua una chiamata API a
-// /politicians
 
-// Salva la risposta in uno stato React (useState).
-
-// Mostra i politici in una lista di card, visualizzando almeno le seguenti proprietà:
-
-// Nome (name)
-// Immagine (image)
-// Posizione (position)
-// Breve biografia (biography)
-
-// Obiettivo: Caricare e mostrare i politici in un’interfaccia chiara e leggibile.

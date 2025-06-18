@@ -6,6 +6,18 @@ body {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
+h1 {
+  font-size: 50px;
+  text-align: center;
+}
+
+input {
+  padding: 5px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin: 0 20px;
+}
 
 
 .card-list {
@@ -39,7 +51,7 @@ body {
 .card span {
   font-size: 1rem;
   color: #555;
-  margin: 0.3rem 0;
+  ;
 }
 
 .card p {
